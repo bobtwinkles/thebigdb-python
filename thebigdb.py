@@ -43,6 +43,7 @@ class TheBigDB:
         except BadStatusLine:
             errorCallback('DB Connection timed out, reopening')
             self.connection = HTTPConnection('api.thebigdb.com')
+            return
         if response.status != 200 : #Something went wrong!
             errorCallback(response)
         else:

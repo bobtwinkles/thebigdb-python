@@ -19,7 +19,6 @@ class TheBigDB:
             debug=False,
             ):
         self.apiKey=apiKey
-        self.connection=HTTPConnection("api.thebigdb.com")
         self.debug=debug
 
     def search(self, params, successCallback, errorCallback):
@@ -27,6 +26,7 @@ class TheBigDB:
         " Searches TheBigDB
         """
         requestString='/v1/statements/search?'
+        self.connection=HTTPConnection("api.thebigdb.com")
         for i in range(len(params)):
             if (params[i] != ''):
                 requestString += 'nodes[%d]=%s&' % (i, quote(params[i]))
@@ -49,6 +49,7 @@ class TheBigDB:
         " Attempts to add a node to TheBigDB
         """
         requestData=''
+        self.connection=HTTPConnection("api.thebigdb.com")
         if self.apiKey != '':
             requestData += 'api_key=' + self.apiKey + '&'
         for i in range(len(nodes)):
@@ -63,6 +64,7 @@ class TheBigDB:
 
     def _vote(self, nodeid, successCallback, errorCallback, url):
         requestData=''
+        self.connection=HTTPConnection("api.thebigdb.com")
         if self.apiKey != '':
             requestData += 'api_key=' + self.apiKey + '&'
         requestData += 'id=%s&' % (nodeid)

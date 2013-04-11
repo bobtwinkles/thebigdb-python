@@ -38,12 +38,7 @@ class TheBigDB:
         #do the actual request
         if self.debug: print(requestString)
         self.connection.request('GET', requestString)
-        try:
-            response=self.connection.getresponse()
-        except BadStatusLine:
-            errorCallback('DB Connection timed out, reopening')
-            self.connection = HTTPConnection('api.thebigdb.com')
-            return
+        response=self.connection.getresponse()
         if response.status != 200 : #Something went wrong!
             errorCallback(response)
         else:
@@ -61,12 +56,7 @@ class TheBigDB:
             requestData += 'nodes[%d]=%s&' % (i, quote(nodes[i]))
         if self.debug:print(requestData)
         self.connection.request('POST','/v1/statements/create',requestData)
-        try:
-            response=self.connection.getresponse()
-        except BadStatusLine:
-            errorCallback('DB Connection timed out, reopening')
-            self.connection = HTTPConnection('api.thebigdb.com')
-            return
+        response=self.connection.getresponse()
         if response.status != 200 : #Something went wrong!
             errorCallback(response)
         else:
@@ -79,12 +69,7 @@ class TheBigDB:
             requestData += 'api_key=' + self.apiKey + '&'
         requestData += 'id=%s&' % (nodeid)
         self.connection.request('POST',url,requestData)
-        try:
-            response=self.connection.getresponse()
-        except BadStatusLine:
-            errorCallback('DB Connection timed out, reopening')
-            self.connection = HTTPConnection('api.thebigdb.com')
-            return
+        response=self.connection.getresponse()
         if response.status != 200 : #Something went wrong!
             errorCallback(response)
         else:
